@@ -54,6 +54,31 @@ export function parseLessonMarkdown(content: string): Lesson {
         chinese
       })
     }
+    
+    // 解析题目
+    if (line.startsWith('### ')) {
+      const exerciseType = line.substring(4).trim()
+      const questions: string[] = []
+      
+      // 收集题目内容
+      while (++i < lines.length) {
+        const nextLine = lines[i].trim()
+        if (nextLine.startsWith('### ') || nextLine.startsWith('## ') || nextLine.startsWith('# ')) {
+          i--
+          break
+        }
+        if (nextLine) {
+          questions.push(nextLine.replace(/^- /, ''))
+        }
+      }
+      
+      lesson.exercises = lesson.exercises || []
+      lesson.exercises.push({
+        type: exerciseType,
+        questions
+      })
+      continue
+    }
   }
   
   // 添加最后一个分类
@@ -82,4 +107,4 @@ export async function loadLesson(lessonId: string): Promise<Lesson> {
     console.error('加载课程失败:', error)
     throw error
   }
-} 
+}

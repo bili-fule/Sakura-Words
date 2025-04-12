@@ -8,7 +8,7 @@ import { parseLessonMarkdown } from './lessonParser'
  */
 export async function loadLesson(lessonId: string): Promise<Lesson> {
   try {
-    const response = await fetch(`/src/data/lessons/${lessonId}.md`)
+    const response = await fetch(`/data/lessons/${lessonId}.md`)
     if (!response.ok) {
       throw new Error(`加载课程失败: ${response.statusText}`)
     }
@@ -26,7 +26,7 @@ export async function loadLesson(lessonId: string): Promise<Lesson> {
  */
 export async function getLessonList(): Promise<LessonList[]> {
   try {
-    const response = await fetch('/src/data/lessons/list.md')
+    const response = await fetch('/data/lessons/list.md')
     if (!response.ok) {
       throw new Error(`加载课程列表失败: ${response.statusText}`)
     }
@@ -68,4 +68,4 @@ export function getLessonStats(lesson: Lesson) {
     totalWords,
     categoryStats
   }
-} 
+}
